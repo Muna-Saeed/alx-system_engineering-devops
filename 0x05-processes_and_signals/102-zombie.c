@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <unistd.h>
 
 /**
  * infinite_while - Infinite loop to keep the program running
  *
- * Return: Always 0.
+ * Return: 0 (it will never return)
  */
 int infinite_while(void)
 {
@@ -18,9 +17,9 @@ int infinite_while(void)
 }
 
 /**
- * main - Entry point
+ * main - Entry point of the program
  *
- * Return: Always 0.
+ * Return: Always 0
  */
 int main(void)
 {
@@ -30,6 +29,7 @@ int main(void)
 	for (i = 0; i < 5; i++)
 	{
 		child_pid = fork();
+
 		if (child_pid > 0)
 		{
 			printf("Zombie process created, PID: %d\n", child_pid);
