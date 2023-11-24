@@ -1,20 +1,32 @@
 #!/usr/bin/env bash
-# A Bash script that performs the specific actions.
+# Function to handle SIGTERM signal
+function handle_sigterm() {
+  echo "I hate the kill command"
+  cleanup_and_exit
+}
+# Function to handle SIGINT signal
+function handle_sigint() {
+  echo "Y U no love me?!"
+}
+# Function to handle SIGQUIT signal
+function handle_sigquit() {
+  cleanup_and_exit
+}
 # Function to perform cleanup and exit
 function cleanup_and_exit() {
-  rm /var/run/myscript.pid
-  exit
+  rm -f /var/run/myscript.pid
+  exit 0
 }
-# To handle SIGTERM signal
-trap 'echo "I hate the kill command;cleanup_and_exit"' SIGTERM
-# To handle SIGINT signal
-trap 'echo "Y U no love me?!;cleanup_and_exit"' SIGINT
+# Register the handle_sigterm function for SIGTERM signal
+trap 'handle_sigterm' SIGTERM
+# Register the handle_sigint function for SIGINT signal
+trap 'handle_sigint' SIGINT
+# Register the handle_sigquit function for SIGQUIT signal
+trap 'handle_sigquit' SIGQUIT
 # Create the PID file
-echo $$ > /var/run/holbertonscript.pid
-# To handle SIGQUIT signal
-trap 'cleanup_and_exit' SIGQUIT
+echo $$ > /var/run/myscript.pid
 # Infinite loop
 while true; do
   echo "To infinity and beyond"
-  sleep 2
+  sleep 1
 done
