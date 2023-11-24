@@ -15,4 +15,5 @@ echo $$ >> /var/run/holbertonscript.pid
 # Infinite loop
 while true; do
   echo "To infinity and beyond"
+  sleep 2
 done
