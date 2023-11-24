@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # A Bash script that performs the specific actions.
-# To handle SIGQUIT signal
 # Function to perform cleanup and exit
 function cleanup_and_exit() {
   rm /var/run/myscript.pid
-  exit 0
+  exit
 }
 # To handle SIGTERM signal
 trap "echo I hate the kill command;cleanup_and_exit" SIGTERM
@@ -12,6 +11,8 @@ trap "echo I hate the kill command;cleanup_and_exit" SIGTERM
 trap "echo Y U no love me?!;cleanup_and_exit" SIGINT
 # Create the PID file
 echo $$ > /var/run/holbertonscript.pid
+# To handle SIGQUIT signal
+trap 'cleanup_and_exit' SIGQUIT
 # Infinite loop
 while true; do
   echo "To infinity and beyond"
