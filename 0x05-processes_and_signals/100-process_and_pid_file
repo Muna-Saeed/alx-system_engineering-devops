@@ -3,7 +3,7 @@
 # To handle SIGQUIT signal
 # Function to perform cleanup and exit
 function cleanup_and_exit() {
-  rm -f /var/run/myscript.pid
+  rm /var/run/myscript.pid
   exit
 }
 # To handle SIGTERM signal
@@ -11,7 +11,7 @@ trap "echo I hate the kill command;cleanup_and_exit" SIGTERM
 # To handle SIGINT signal
 trap "echo Y U no love me?!;cleanup_and_exit" SIGINT
 # Create the PID file
-echo $$ >> /var/run/holbertonscript.pid
+echo $$ > /var/run/holbertonscript.pid
 # Infinite loop
 while true; do
   echo "To infinity and beyond"
