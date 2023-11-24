@@ -6,9 +6,9 @@ function cleanup_and_exit() {
   exit
 }
 # To handle SIGTERM signal
-trap "echo I hate the kill command;cleanup_and_exit" SIGTERM
+trap 'echo "I hate the kill command;cleanup_and_exit"' SIGTERM
 # To handle SIGINT signal
-trap "echo Y U no love me?!;cleanup_and_exit" SIGINT
+trap 'echo "Y U no love me?!;cleanup_and_exit"' SIGINT
 # Create the PID file
 echo $$ > /var/run/holbertonscript.pid
 # To handle SIGQUIT signal
