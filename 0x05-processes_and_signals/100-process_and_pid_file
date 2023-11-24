@@ -4,7 +4,7 @@
 # Function to perform cleanup and exit
 function cleanup_and_exit() {
   rm /var/run/myscript.pid
-  exit
+  exit 0
 }
 # To handle SIGTERM signal
 trap "echo I hate the kill command;cleanup_and_exit" SIGTERM
