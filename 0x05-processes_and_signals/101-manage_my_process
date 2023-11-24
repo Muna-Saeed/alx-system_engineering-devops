@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Function to start manage_my_process
 function start_process() {
   if [ -f "/var/run/my_process.pid" ]; then
@@ -11,7 +10,6 @@ function start_process() {
   echo $! > /var/run/my_process.pid
   echo "manage_my_process started"
 }
-
 # Function to stop manage_my_process
 function stop_process() {
   if [ -f "/var/run/my_process.pid" ]; then
@@ -23,14 +21,12 @@ function stop_process() {
     echo "manage_my_process is not running."
   fi
 }
-
 # Function to restart manage_my_process
 function restart_process() {
   stop_process
   start_process
   echo "manage_my_process restarted"
 }
-
 # Check for the command-line argument
 if [ $# -eq 1 ]; then
   case "$1" in
