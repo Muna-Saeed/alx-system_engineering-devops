@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 # Displays the content of the file /etc/passwd in a story format.
 
-IFS=":"
-
-while read -r username password userid groupid user_info home_directory shell; do
-    # Display the story for each user
-    echo "The user $username is part of the $groupid gang, lives in $home_directory and rides $shell."
-    echo "$userid's place is protected by the passcode $password, more info about the user here: $user_info"
+while IFS=: read -r username _ uid gid gecos home shell; do
+  echo "The user $username is part of the $gid gang, lives in $home, and rides $shell. $uid's place is protected by the passcode x, more info about the user here: $gecos"
 done < /etc/passwd
