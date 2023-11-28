@@ -1,27 +1,18 @@
 #!/usr/bin/env ruby
 
-# Check if the log file path is provided
-if ARGV.empty?
-  puts "Usage: ruby 100-textme.rb <log_file>"
-  exit
-end
+log_data = ARGV[0]
 
-# Get the log file path
-log_file = ARGV[0]
+# Regular expression to extract sender, receiver, and flags
+regex = /\[from:(?<sender>[\w\d\+\-]+)\] \[to:(?<receiver>[\w\d\+\-]+)\] \[flags:(?<flags>[\w\d:\-]+)\]/
 
-# Read the log file
-log_data = File.read(log_file)
+match_data = log_data.match(regex)
 
-# Define the regular expression pattern
-pattern = /\[from:(.*?)\] \[to:(.*?)\] \[flags:(.*?)\]/
-
-# Extract sender, receiver, and flags using the pattern
-matches = log_data.scan(pattern)
-
-# Output the results
-matches.each do |match|
-  sender = match[0]
-  receiver = match[1]
-  flags = match[2]
+if match_data
+  sender = match_data[:sender]
+  receiver = match_data[:receiver]
+  flags = match_data[:flags]
+  
   puts "#{sender},#{receiver},#{flags}"
+else
+  puts "No match found in the log data."
 end
