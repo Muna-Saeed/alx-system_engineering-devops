@@ -1,5 +1,3 @@
-Certainly! Below are the README.md details for the provided tasks:
-
 ## 0x08. Networking basics #1
 
 ### Project Overview:
