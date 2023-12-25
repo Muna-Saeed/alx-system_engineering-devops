@@ -1,0 +1,40 @@
+https://drive.google.com/file/d/1PWvBvK6lNciLtV0DZaZLrais857_D21Q/view?usp=drive_link
+
+Design Explanation:
+1. User wanting to access the website: The user enters the URL "www.foobar.com" in their web browser to access the website.
+
+2. Server: A single server hosts the entire web infrastructure. It acts as the central component that handles incoming requests and serves the website content.
+
+3. Web Server (Nginx): The web server (e.g., Nginx) is responsible for handling incoming HTTP requests from the user. It receives the request for "www.foobar.com" and forwards it to the appropriate application server.
+
+4. Application Server: The application server runs the web application code and processes the user's request. It interacts with the database server to fetch or store data required by the application.
+
+5. Application Files: The application files contain the code base of the web application. These files are hosted on the server and are accessed by the application server to execute the application's logic.
+
+6. Database (MySQL): The database stores and manages the application's data. It can be accessed by the application server to perform read and write operations on the data.
+
+7. Domain Name: The domain name, in this case, "www.foobar.com," is a user-friendly name that represents the website's IP address (e.g., 8.8.8.8). It allows users to access the website using a memorable URL instead of remembering the IP address.
+
+Specific Questions:
+
+- What is a server? A server is a computer or system that provides services or resources to other computers or users over a network. In this context, it refers to the machine hosting the web infrastructure.
+
+- What is the role of the domain name? The domain name is used to identify and locate websites on the internet. It provides a human-readable name that maps to the IP address of the server hosting the website.
+
+- What type of DNS record is www in www.foobar.com? The "www" in "www.foobar.com" is a subdomain, and it is typically associated with the DNS record type "CNAME" (Canonical Name) or "A" (Address) record.
+
+- What is the role of the web server? The web server (e.g., Nginx) handles incoming HTTP requests from users and serves static content or routes dynamic requests to the appropriate application server.
+
+- What is the role of the application server? The application server executes the web application's code and processes user requests. It interacts with databases, performs business logic, and generates dynamic content to be served back to the user.
+
+- What is the role of the database? The database stores and manages structured data required by the web application. It allows for efficient data retrieval, storage, and manipulation.
+
+- What is the server using to communicate with the user's computer requesting the website? The server communicates with the user's computer using the HTTP (Hypertext Transfer Protocol) protocol. It sends responses containing the requested web content, which the user's computer interprets and displays in their web browser.
+
+Issues with the Infrastructure:
+
+- Single Point of Failure (SPOF): Since the entire infrastructure relies on a single server, any failure or downtime of that server could lead to the website becoming inaccessible.
+
+- Downtime during maintenance: When maintenance is needed, such as deploying new code, the web server needs to be restarted, resulting in temporary downtime.
+
+- Limited Scalability: With a single server, the infrastructure may struggle to handle a significant increase in incoming traffic, leading to performance issues or downtime.
