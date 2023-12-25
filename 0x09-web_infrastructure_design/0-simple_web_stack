@@ -1,6 +1,6 @@
 https://drive.google.com/file/d/1PWvBvK6lNciLtV0DZaZLrais857_D21Q/view?usp=drive_link
 
-## Design Explanation:
+Design Explanation:
 1. User wanting to access the website: The user enters the URL "www.foobar.com" in their web browser to access the website.
 
 2. Server: A single server hosts the entire web infrastructure. It acts as the central component that handles incoming requests and serves the website content.
@@ -15,7 +15,7 @@ https://drive.google.com/file/d/1PWvBvK6lNciLtV0DZaZLrais857_D21Q/view?usp=drive
 
 7. Domain Name: The domain name, in this case, "www.foobar.com," is a user-friendly name that represents the website's IP address (e.g., 8.8.8.8). It allows users to access the website using a memorable URL instead of remembering the IP address.
 
-## Specific Questions:
+Specific Questions:
 
 - What is a server? A server is a computer or system that provides services or resources to other computers or users over a network. In this context, it refers to the machine hosting the web infrastructure.
 
@@ -31,7 +31,7 @@ https://drive.google.com/file/d/1PWvBvK6lNciLtV0DZaZLrais857_D21Q/view?usp=drive
 
 - What is the server using to communicate with the user's computer requesting the website? The server communicates with the user's computer using the HTTP (Hypertext Transfer Protocol) protocol. It sends responses containing the requested web content, which the user's computer interprets and displays in their web browser.
 
-## Issues with the Infrastructure:
+Issues with the Infrastructure:
 
 - Single Point of Failure (SPOF): Since the entire infrastructure relies on a single server, any failure or downtime of that server could lead to the website becoming inaccessible.
 
