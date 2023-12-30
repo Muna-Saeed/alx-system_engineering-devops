@@ -2,7 +2,7 @@ https://drive.google.com/file/d/13IHuHcgTG3nV9F7QtGImLOS5p6gtEzk3/view?usp=shari
 
 What are firewalls for?
 Firewall 1:
-By placing Firewall 1 position between user/client and Laod Balancer, adds an extra layer of security between the users and the load balancer,
+Placing Firewall 1 position between the user/client and the Load Balancer, adds an extra layer of security between the users and the load balancer,
 helping to protect your web application from potential threats originating from the external network.
 This firewall contributes to a defense-in-depth strategy, enhancing the overall security posture of your system.
 Ingress Filtering (User to Load Balancer):
@@ -17,9 +17,7 @@ Records information about allowed and denied traffic for security analysis and a
 User Authentication and Authorization:
 May enforce additional security measures for user authentication and authorization before allowing access to the load balancer and, subsequently, the web application.
 
-
 Firewall 2 and Firewall 3:
-
 Positioned between the load balancer and Server 2.
 Ingress Filtering: Monitors and controls incoming traffic from the load balancer to Server 2.
 Egress Filtering: Controls outgoing traffic from Server 2 to the load balancer.
