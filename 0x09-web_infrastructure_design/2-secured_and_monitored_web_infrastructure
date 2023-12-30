@@ -1,0 +1,81 @@
+https://drive.google.com/file/d/13IHuHcgTG3nV9F7QtGImLOS5p6gtEzk3/view?usp=sharing
+
+What are firewalls for?
+Firewall 1:
+By placing Firewall 1 position between user/client and Laod Balancer, adds an extra layer of security between the users and the load balancer,
+helping to protect your web application from potential threats originating from the external network.
+This firewall contributes to a defense-in-depth strategy, enhancing the overall security posture of your system.
+Ingress Filtering (User to Load Balancer):
+Monitors and controls incoming traffic from the user/client to the load balancer. This helps filter out malicious or unauthorized requests before they reach the load balancer.
+Egress Filtering (Load Balancer to User):
+Controls outgoing traffic from the load balancer to the user/client, ensuring that only authorized and safe responses are allowed to reach the user.
+Protection Against Attacks: Acts as a barrier against common web-based attacks, such as DDoS (Distributed Denial of Service) attacks or attempts to exploit vulnerabilities in the web application.
+Security Policies:
+Enforces security policies to allow or deny specific types of traffic, based on rules such as IP addresses, port numbers, and protocols.
+Traffic Logging:
+Records information about allowed and denied traffic for security analysis and auditing.
+User Authentication and Authorization:
+May enforce additional security measures for user authentication and authorization before allowing access to the load balancer and, subsequently, the web application.
+
+
+Firewall 2 and Firewall 3:
+
+Positioned between the load balancer and Server 2.
+Ingress Filtering: Monitors and controls incoming traffic from the load balancer to Server 2.
+Egress Filtering: Controls outgoing traffic from Server 2 to the load balancer.
+Security Policies: Enforces security policies to allow or deny specific types of traffic based on rules.
+Protection Against Threats: Serves as a security barrier against unauthorized access, attacks, and potential threats from the external network (between the load balancer and Server 2).
+Traffic Logging: Records information about allowed and denied traffic for security analysis.
+
+
+Why is the traffic served over HTTPS?
+Serving traffic over HTTPS, the secure version of HTTP, is essential for encrypting the communication between a user's device and the web server.
+This encryption safeguards sensitive data, such as login credentials and personal information, preventing interception and eavesdropping.
+Moreover, HTTPS authenticates the web server's identity through digital certificates, instilling trust in users that they are connecting to a legitimate website.
+Websites employing HTTPS not only comply with privacy regulations but also benefit from improved search engine rankings, as search engines consider secure connections a ranking factor.
+Additionally, HTTPS enhances the overall integrity of data, prevents tampering during transit, and helps establish a credible and trustworthy online presence,
+crucial for maintaining user confidence and avoiding browser security warnings.
+
+What monitoring is used for?
+Monitoring is like keeping an eye on the web system to make sure it's running smoothly.
+We use three monitoring tools in this setup. The first one (Monitoring Client 1) watches over the entire system, making sure it handles traffic well.
+The other two (Monitoring Client 2 and 3) focus on each server, checking if they're doing their jobs properly.
+These tools help catch problems early, so we can fix them quickly and keep the web application working smoothly.
+
+Explain what to do if you want to monitor your web server QPS?
+To monitor the Query Per Second (QPS) on my web servers within this architecture, integrate Sumo Logic monitoring.
+I will Ensure that Sumo Logic agents or collectors are installed on Linux Server 1 and Linux Server 2.
+Configure the agents to specifically measure QPS metrics, and set up alerts in Sumo Logic based on QPS thresholds for timely notifications of potential performance issues.
+Leverage Sumo Logic's dashboard to visualize QPS data over time, gaining insights into usage patterns and potential anomalies.
+Regularly review the monitoring data to optimize server configurations based on performance insights, ensuring the efficient operation of my web application.
+This comprehensive monitoring approach, using Sumo Logic, provides a proactive understanding of QPS trends and facilitates efficient maintenance and scalability planning
+
+
+Why terminating SSL at the load balancer level is an issue?
+
+When SSL is terminated at the load balancer, it means the load balancer decrypts secure connections before passing data to the servers. This has some potential drawbacks.
+First, it exposes sensitive data within the internal network, which could be a security concern. Second,
+if an attacker gains access to the internal network, they may eavesdrop on communication between the load balancer and servers.
+Additionally, terminating SSL at the load balancer limits the ability to directly verify client certificates on the servers, and it increases the load on the load balancer.
+Whether this is an issue depends on your specific security and performance needs.
+
+
+Why having only one MySQL server capable of accepting writes is an issue?
+Having only one MySQL server capable of accepting writes is problematic for several reasons.
+Firstly, it creates a single point of failure—if this server experiences downtime or fails, write functionality for the entire application is lost.
+This lack of redundancy can lead to service disruptions and data unavailability.
+Secondly, scalability is constrained, as a single server may struggle to efficiently handle a growing volume of write requests.
+Thirdly, performance bottlenecks may arise, especially during periods of high write loads,
+impacting the responsiveness of the application. Additionally, maintenance tasks may pose challenges, and there is an increased risk of data loss or corruption without a backup. To address these issues,
+it is advisable to implement a more robust database architecture, such as deploying multiple MySQL servers or employing strategies like replication and clustering.
+
+
+Why having servers with all the same components (database, web server and application server) might be a problem?
+Having all servers with the same components in my design might cause some problems.
+Firstly, if they're all the same and one has an issue, it could affect all the others,
+making your system less reliable.
+Secondly, distributing traffic evenly for better performance could be tricky since all servers are identical.
+Thirdly, having the same setup on all servers might not use resources efficiently, and scaling up your system could be harder.
+Lastly, figuring out what went wrong and fixing it might be more challenging if all servers are configured the same way.
+To improve this, we might want to consider having different servers for specific tasks, like one for databases, one for web services, and one for applications.
+This can make your system more reliable, scalable, and easier to manage.
