@@ -1,0 +1,33 @@
+https://drive.google.com/file/d/1WF2vY1g6-U2_TJvv6sgNvHrC_JtyLMLD/view?usp=sharing
+
+Design Explanation:
+
+user: The user wants to access the website by entering the URL "www.foobar.com" in their web browser.
+
+Load Balancer (HAproxy): The load balancer is responsible for distributing incoming requests across multiple web servers. It uses a distribution algorithm to determine which server should handle each request.
+
+Web Server (Nginx): The web server (Nginx) receives the requests forwarded by the load balancer and serves static content or routes dynamic requests to the appropriate application server.
+
+Application Server: Multiple application servers execute the web application's code, interact with the database server, and generate dynamic content. They handle the actual processing of user requests.
+
+Database (MySQL): Multiple database servers form a Primary-Replica (Master-Slave) cluster. The primary node handles write operations, while the replica nodes replicate the data from the primary node and handle read operations.
+
+Specific Questions:
+
+For every additional element, why you are adding it: Additional servers are added to distribute the workload, improve performance, and provide fault tolerance. The load balancer ensures requests are evenly distributed, and multiple application servers handle concurrent requests. The database cluster adds redundancy and improves read scalability.
+
+Distribution algorithm for the load balancer and how it works: The distribution algorithm can be round-robin, least connections, or based on other factors. Round-robin distributes requests sequentially, least connections assigns requests to the server with the fewest active connections, and other algorithms consider factors like server health or response time.
+
+Active-Active or Active-Passive setup with the load balancer: Active-Active setup allows all servers to handle incoming requests simultaneously, while Active-Passive has one server actively handling requests, with the others serving as backups. Active-Active provides higher performance and scalability, while Active-Passive provides failover protection.
+
+How a Primary-Replica (Master-Slave) database cluster works: In a Primary-Replica cluster, the primary node accepts write operations and replicates the data to replica nodes. Replica nodes handle read operations by serving data replicated from the primary node. This setup provides data redundancy, scalability, and high availability.
+
+Difference between the Primary node and Replica node in regard to the application: The primary node handles write operations and updates data, while the replica nodes handle read operations and serve data. The application typically connects to the primary node for write operations and can connect to any replica node for read operations.
+
+Issues with the Infrastructure:
+
+Single Point of Failure (SPOF): The load balancer, web server, application servers, and database servers can become single points of failure if any of them fail, leading to service disruption.
+
+Security issues (no firewall, no HTTPS): Without a firewall, the infrastructure is vulnerable to unauthorized access or attacks. The absence of HTTPS encryption can expose sensitive data during transmission.
+
+Lack of monitoring: Without proper monitoring systems, it becomes challenging to identify performance issues, server failures, or potential bottlenecks, leading to delays in issue detection and resolution.
