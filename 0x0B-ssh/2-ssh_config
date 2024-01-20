@@ -1,0 +1,6 @@
+# ~/.ssh/config
+Host 445286-web-01
+    HostName 54.144.222.201
+    User ubuntu
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no
