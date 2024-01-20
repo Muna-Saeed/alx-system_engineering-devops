@@ -5,4 +5,4 @@
 key_name="school"
 
 # Generate the RSA key pair with 4096 bits and protect it with passphrase "betty"
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/"$key_name" -N "betty"
+ssh-keygen -t rsa -b 4096 -f "$key_name" -N "betty"
