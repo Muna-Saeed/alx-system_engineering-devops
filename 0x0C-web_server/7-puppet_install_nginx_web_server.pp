@@ -1,21 +1,41 @@
-# Ensure Nginx is installed
-class { 'nginx':
+# 7-puppet_install_nginx_web_server.pp
+
+# Install Nginx package
+package { 'nginx':
   ensure => 'installed',
 }
 
-# Configure Nginx for Hello World! on root
-file { '/var/www/html/index.html':
-  content => 'Hello World!',
+# Configure Nginx
+file { '/etc/nginx/sites-available/default':
+  ensure => 'present',
+  content => '
+    server {
+      listen 80 default_server;
+      listen [::]:80 default_server;
+    
+      root /var/www/html;
+      index index.html index.htm index.nginx-debian.html;
+    
+      server_name _;
+    
+      location / {
+        return 301 http://$host/redirect_me;
+      }
+    
+      location /redirect_me {
+        return 301 http://$host/hello.html;
+      }
+    
+      location /hello.html {
+        return 200 "Hello World!";
+      }
+    }
+  ',
 }
 
-nginx::resource::vhost { 'default':
-  listen_port => '80',
-  proxy       => 'http://localhost:8080',
-}
-
-# Configure Nginx for redirection
-nginx::resource::location { '/redirect_me':
-  ensure   => present,
-  location => '/',
-  rewrite  => '^(.*)$ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent',
+# Enable and start Nginx service
+service { 'nginx':
+  ensure => 'running',
+  enable => 'true',
+  require => Package['nginx'],
 }
