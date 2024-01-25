@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# Start the Docker container
+#Starting apache2 server
 
-docker run -p 8080:80 -d holbertonschool/265-0
-docker exec -it <container_id> /bin/bash
-cd /etc/apache2/sites-available
-vi 000-default.conf
-
-service apache2 restart
+service apache2 start
