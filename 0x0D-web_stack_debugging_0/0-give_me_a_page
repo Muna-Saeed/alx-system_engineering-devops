@@ -9,7 +9,7 @@ docker ps
 docker exec -it <container_id> /bin/bash
 
 # Navigate to the Apache configuration directory
-cd /etc/apache2/sites-available/
+cd /etc/apache2/sites-available/ || exit
 
 # Edit the default configuration file
 nano 000-default.conf
