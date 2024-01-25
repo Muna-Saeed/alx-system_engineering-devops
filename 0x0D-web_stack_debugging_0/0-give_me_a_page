@@ -22,6 +22,3 @@ DocumentRoot /var/www/html
 
 # Restart the Apache service
 service apache2 restart
-
-# Exit the container
-exit
