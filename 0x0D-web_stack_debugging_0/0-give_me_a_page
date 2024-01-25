@@ -1,27 +1,9 @@
 #!/usr/bin/env bash
 # Start the Docker container
-container_id=$(docker run -p 8080:80 -d -it holbertonschool/265-0)
 
-# Check the running containers
-docker ps
+docker run -p 8080:80 -d holbertonschool/265-0
+docker exec -it <container_id> /bin/bash
+cd /etc/apache2/sites-available
+vi 000-default.conf
 
-# Connect to the Docker container
-docker exec -it "$container_id" /bin/bash
-
-# Navigate to the Apache configuration directory
-cd /etc/apache2/sites-available/ || exit
-
-# Edit the default configuration file
-nano 000-default.conf
-
-# Look for the line that sets the DocumentRoot and make sure it's correct
-# Change if necessary
-DocumentRoot /var/www/html
-
-# Save the changes and exit the text editor
-
-# Restart the Apache service
 service apache2 restart
-
-# Exit the container
-exit
