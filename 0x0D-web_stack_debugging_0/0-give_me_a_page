@@ -1,25 +1,3 @@
 #!/usr/bin/env bash
-
 # Commands used to fix the issue and make Apache serve the page
-
-# Connect to the running container
-docker exec -it CONTAINER_ID /bin/bash
-
-# Start Apache service
-service apache2 start
-
-# Check Apache status and ensure "apache2 is running" is present in the output
-if service apache2 status | grep -q "apache2 is running"; then
-  echo "Apache is running."
-else
-  echo "Apache is not running."
-fi
-
-# Check Apache error logs
-tail -f /var/log/apache2/error.log
-
-# Check listening ports
-netstat -tulpen
-
-# Exit the container
-exit
+sudo service apache2 start
