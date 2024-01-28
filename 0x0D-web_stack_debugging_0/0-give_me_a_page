@@ -8,8 +8,12 @@ docker exec -it CONTAINER_ID /bin/bash
 # Start Apache service
 service apache2 start
 
-# Check Apache status
-service apache2 status
+# Check Apache status and ensure "apache2 is running" is present in the output
+if service apache2 status | grep -q "apache2 is running"; then
+  echo "Apache is running."
+else
+  echo "Apache is not running."
+fi
 
 # Check Apache error logs
 tail -f /var/log/apache2/error.log
