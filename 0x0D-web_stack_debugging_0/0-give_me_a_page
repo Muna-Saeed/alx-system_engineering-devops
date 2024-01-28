@@ -1,3 +1,6 @@
 #!/usr/bin/env bash
 # Commands used to fix the issue and make Apache serve the page
-service apache2 restart
+docker run -p 8080:80 -d -it holbertonschool/265-0
+docker exec -it <container_id> /bin/bash
+service apache2 start
+exit
