@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
-# Install Nginx
-sudo apt-get update
+# Install nginx if not already installed
+sudo apt-get update -y
 sudo apt-get install -y nginx
 
-# Configure Nginx
-echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+# Configure Nginx for custom 404 HTML page
+echo "Ceci n'est pas une page
 
-# Use sed to insert lines for custom 404 page in Nginx configuration
-sudo sed -i '/server_name _;/a \\n\tlocation /404 {\n\t\tinternal;\n\t\treturn 404 "Ceci n'est pas une page";\n\t}\n\terror_page 404 /404;' /etc/nginx/sites-available/default
+" | sudo tee /usr/share/nginx/html/404.html > /dev/null
 
-# Restart Nginx
-sudo service nginx restart
+
+sudo sed -i "/listen 80 default_server;/a error_page 404 /404.html;\nlocation = /404.html {\n    root /usr/share/nginx/html;\n    internal;\n}" /etc/nginx/sites-enabled/default
+
+# Test and Restart Nginx to apply changes
+sudo nginx -t && sudo service nginx restart
