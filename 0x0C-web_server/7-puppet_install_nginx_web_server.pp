@@ -1,41 +1,50 @@
-# 7-puppet_install_nginx_web_server.pp
+# File: 7-puppet_install_nginx_web_server.pp
 
 # Install Nginx package
 package { 'nginx':
   ensure => 'installed',
 }
 
-# Configure Nginx
-file { '/etc/nginx/sites-available/default':
-  ensure => 'present',
-  content => '
-    server {
-      listen 80 default_server;
-      listen [::]:80 default_server;
-    
-      root /var/www/html;
-      index index.html index.htm index.nginx-debian.html;
-    
-      server_name _;
-    
-      location / {
-        return 301 http://$host/redirect_me;
-      }
-    
-      location /redirect_me {
-        return 301 http://$host/hello.html;
-      }
-    
-      location /hello.html {
-        return 200 "Hello World!";
-      }
-    }
-  ',
+# Configure Nginx server
+file { '/var/www/html/index.html':
+  ensure  => 'present',
+  content => 'Hello World!',
 }
 
-# Enable and start Nginx service
+file { '/etc/nginx/sites-available/default':
+  ensure  => 'present',
+  content => '
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        root   /var/www/html;
+        index  index.html;
+    }
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        root /usr/share/nginx/html;
+        internal;
+    }
+}
+',
+}
+
+# Enable the site by creating a symbolic link
+file { '/etc/nginx/sites-enabled/default':
+  ensure => 'link',
+  target => '/etc/nginx/sites-available/default',
+}
+
+# Restart Nginx service
 service { 'nginx':
-  ensure => 'running',
-  enable => 'true',
-  require => Package['nginx'],
+  ensure    => 'running',
+  enable    => true,
+  subscribe => [File['/etc/nginx/sites-available/default'], Package['nginx']],
 }
