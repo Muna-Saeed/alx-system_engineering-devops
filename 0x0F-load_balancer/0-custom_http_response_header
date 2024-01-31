@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Update Nginx configuration to add the custom header after the first occurrence of location / {
+sudo sed -i '0,/\blocation \/ {/s/\blocation \/ {/&\n\tadd_header X-Served-By $hostname;/' /etc/nginx/sites-available/default
+
+# Restart Nginx
+sudo service nginx restart
