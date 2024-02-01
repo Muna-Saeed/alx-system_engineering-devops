@@ -19,6 +19,5 @@ backend web_servers
 # enable haproxy to be started by init script
 echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 
-# Start and enable the HAProxy service
-sudo systemctl start haproxy
-sudo systemctl enable haproxy
+# Restart the HAProxy service
+sudo service haproxy restart
