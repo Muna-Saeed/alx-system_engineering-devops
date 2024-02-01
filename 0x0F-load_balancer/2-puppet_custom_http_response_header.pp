@@ -21,6 +21,8 @@ server {
     location / {
         root   /var/www/html;
         index  index.html;
+
+	add_header X-Served-By $hostname;
     }
 
     location /redirect_me {
@@ -33,7 +35,6 @@ server {
         internal;
     }
 	
-   add_header X-Served-By $hostname;
 }
 ',
 }
