@@ -16,6 +16,9 @@ backend web_servers
         server 445286-web-02 54.146.56.220:80 check
 " | sudo tee -a /etc/haproxy/haproxy.cfg
 
+# enable haproxy to be started by init script
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
 # Start and enable the HAProxy service
 sudo systemctl start haproxy
 sudo systemctl enable haproxy
