@@ -14,7 +14,7 @@ if ! ss -tnl | grep -q ':80 '; then
     sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 
     # Reload Nginx configuration
-    service nginx reload
+    service nginx restart
 fi
 
 # Verify that Nginx is now listening on port 80
