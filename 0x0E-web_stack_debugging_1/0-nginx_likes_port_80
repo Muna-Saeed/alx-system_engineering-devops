@@ -16,10 +16,3 @@ if ! ss -tnl | grep -q ':80 '; then
     # Reload Nginx configuration
     service nginx restart
 fi
-
-# Verify that Nginx is now listening on port 80
-if ss -tnl | grep -q ':80 '; then
-    echo "Nginx is now listening on port 80 for all active IPv4 IPs."
-else
-    echo "Failed to configure Nginx to listen on port 80."
-fi
