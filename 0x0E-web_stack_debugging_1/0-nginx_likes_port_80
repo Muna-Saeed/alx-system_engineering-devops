@@ -11,8 +11,8 @@ service nginx start
 # Check if Nginx is listening on port 80
 if ! ss -tnl | grep -q ':80 '; then
     # Configure Nginx to listen on port 80
-    sed -i 's/\(listen \[::\]:\|listen \)80;/\180;/' /etc/nginx/sites-available/default
-
+    #sed -i 's/\(listen \[::\]:\|listen \)80;/\180;/' /etc/nginx/sites-available/default
+    sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
     # Reload Nginx configuration
     service nginx reload
 fi
