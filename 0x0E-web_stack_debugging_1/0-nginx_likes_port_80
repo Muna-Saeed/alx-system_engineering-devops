@@ -8,11 +8,8 @@ apt-get install -y nginx
 # Ensure Nginx is running
 service nginx start
 
-# Check if Nginx is listening on port 80
-if ! ss -tnl | grep -q ':80 '; then
-    # Configure Nginx to listen on port 80
-    sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+# Configure Nginx to listen on port 80
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 
-    # Reload Nginx configuration
-    service nginx restart
-fi
+# Reload Nginx configuration
+service nginx restart
