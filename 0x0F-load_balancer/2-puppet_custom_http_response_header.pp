@@ -11,6 +11,11 @@ file { '/var/www/html/index.html':
   content => 'Hello World!',
 }
 
+exec {'HTTP header':
+	command => 'sed -i "25i\	add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default',
+	provider => 'shell'
+}
+
 file { '/etc/nginx/sites-available/default':
   ensure  => 'present',
   content => '
@@ -21,8 +26,6 @@ server {
     location / {
         root   /var/www/html;
         index  index.html;
-
-	add_header X-Served-By $hostname;
     }
 
     location /redirect_me {
