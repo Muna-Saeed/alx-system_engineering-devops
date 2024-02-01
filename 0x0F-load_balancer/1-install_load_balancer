@@ -7,7 +7,7 @@ sudo apt-get install -y haproxy
 # Configure HAProxy
 
 echo "frontend web_front
-        bind 0.0.0.0:80
+        bind *:80
         default_backend web_servers
 
 backend web_servers
