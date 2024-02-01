@@ -33,7 +33,7 @@ server {
         internal;
     }
 	
-   add_header X-Served-By \$hostname;
+   add_header X-Served-By $hostname;
 }
 ',
 }
