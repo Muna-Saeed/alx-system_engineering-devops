@@ -1,36 +1,30 @@
 #!/usr/bin/env bash
-# Function to get the record information for a subdomain
-get_record_info() {
-    local subdomain=$1
-    local domain=$2
+# This script displays information about subdomains.
 
-    # Using dig to get the DNS information for the subdomain
-    dig_output=$(dig ${subdomain}.${domain} | grep -A1 'ANSWER SECTION:')
-
-    # Extract record type and destination IP from dig output using awk
-    record_type=$(echo "${dig_output}" | awk '/IN\s+[A-Z]+/{print $4}')
-    destination=$(echo "${dig_output}" | awk '/IN\s+[A-Z]+/{print $5}')
-
-    # Display the information
-    echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
-}
-
-# Main script
-main() {
-    local domain=$1
-    local subdomains=("www" "lb-01" "web-01" "web-02")
-
-    # Loop through default subdomains and display information
-    for sub in "${subdomains[@]}"; do
-        get_record_info "${sub}" "${domain}"
-    done
-}
-
-# Check for correct number of arguments
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <domain>"
+# Check if the required arguments are provided
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <domain> [subdomain]"
     exit 1
 fi
 
-# Call the main function with the provided domain
-main "$1"
+# Function to display information about a subdomain
+display_info() {
+    domain="$1"
+    subdomain="$2"
+
+# If subdomain is not provided, display information for default subdomains
+if [ -z "$subdomain" ]; then
+    subdomains=("www" "lb-01" "web-01" "web-02")
+else
+    subdomains=("$subdomain")
+fi
+
+# Iterate over the subdomains and display information
+for sub in "${subdomains[@]}"; do
+    record_type=$(dig "$sub.$domain" | awk '/ANSWER SECTION/ { getline; print $4}')
+    destination=$(dig "$sub.$domain" | awk '/ANSWER SECTION/ { getline; print $5}')
+    echo "The subdomain $sub a $record_type record and points to $destination"
+done
+}
+
+display_info "$1" "$2"
