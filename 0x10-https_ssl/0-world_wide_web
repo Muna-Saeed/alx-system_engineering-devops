@@ -1,19 +1,27 @@
 #!/usr/bin/env bash
 # This script displays information about subdomains.
 
-# retrieve and display information about a specific subdomain
-check_subdomain() {
-    domain=$1
-    subdomain=$2
-    record=$(dig $subdomain.$domain | awk '/^'${subdomain}.${domain}'\./ {print $4}')
-    echo "The subdomain $subdomain is a A record and points to $record"
+# Check if the required arguments are provided
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+domain="$1"
+subdomain="$2"
+
+# Function to display information about a subdomain
+display_info() {
+    record_type=$(dig "$subdomain.$domain" | awk '/IN\s/{print $4}')
+    destination=$(dig "$subdomain.$domain" | awk '/IN\s/{getline; print $1}')
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
 }
 
-if [ -z "$2" ]; then
-    check_subdomain $1 www
-    check_subdomain $1 lb-01
-    check_subdomain $1 web-01
-    check_subdomain $1 web-02
+# If subdomain is not provided, display information for default subdomains
+if [ -z "$subdomain" ]; then
+    subdomains=("www" "lb-01" "web-01" "web-02")
 else
-    check_subdomain $1 $2
+    subdomains=("$subdomain")
 fi
+
+
