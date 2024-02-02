@@ -12,8 +12,10 @@ subdomain="$2"
 
 # Function to display information about a subdomain
 display_info() {
-    record_type=$(dig "$subdomain.$domain" | awk '/IN\s/{print $4}')
-    destination=$(dig "$subdomain.$domain" | awk '/IN\s/{getline; print $1}')
+    local record_type
+    local destination
+    record_type=$(dig +short "$subdomain.$domain" | awk '{print $3}')
+    destination=$(dig +short "$subdomain.$domain" | awk '{getline; print}')
     echo "The subdomain $subdomain is a $record_type record and points to $destination"
 }
 
@@ -24,4 +26,12 @@ else
     subdomains=("$subdomain")
 fi
 
+# Iterate over the subdomains and display information
+display_subdomains_info() {
+    for sub in "${subdomains[@]}"; do
+        display_info "$sub"
+    done
+}
 
+# Call the function to display subdomain information
+display_subdomains_info
