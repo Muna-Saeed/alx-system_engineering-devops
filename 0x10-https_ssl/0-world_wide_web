@@ -1,5 +1,4 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 # Function to get the record information
 get_record_info() {
     local domain=$1
