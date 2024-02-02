@@ -11,9 +11,11 @@ file { '/var/www/html/index.html':
   content => 'Hello World!',
 }
 
-exec {'HTTP header':
-	command => 'sed -i "25i\	add_header X-Served-By \$hostname;" /etc/nginx/sites-available/default',
-	provider => 'shell'
+# Add custom HTTP response header
+file { '/etc/nginx/sites-available/default':
+  ensure  => 'present',
+  content => template('nginx/custom_header.conf.erb'),
+  notify  => Service['nginx'],
 }
 
 file { '/etc/nginx/sites-available/default':
@@ -26,6 +28,7 @@ server {
     location / {
         root   /var/www/html;
         index  index.html;
+	add_header X-Served-By <%= @hostname %>;
     }
 
     location /redirect_me {
