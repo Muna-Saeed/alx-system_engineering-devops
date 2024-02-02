@@ -1,37 +1,37 @@
-#!/usr/bin/env bash
-# This script displays information about subdomains.
+#!/bin/bash
 
-# Check if the required arguments are provided
-if [ "$#" -lt 1 ]; then
+# Function to get the record information
+get_record_info() {
+    local domain=$1
+    local subdomain=$2
+    dig_output=$(dig ${subdomain}.${domain} | grep -A1 'ANSWER SECTION:')
+    record_type=$(echo "${dig_output}" | awk '/IN\s+[A-Z]+/{print $4}')
+    destination=$(echo "${dig_output}" | awk '/IN\s+[A-Z]+/{print $5}')
+    echo "The subdomain ${subdomain} is a ${record_type} record and points to ${destination}"
+}
+
+# Main script
+main() {
+    local domain=$1
+    local subdomain=$2
+
+    if [ -z "${subdomain}" ]; then
+        # Display information for default subdomains
+        subdomains=("www" "lb-01" "web-01" "web-02")
+        for sub in "${subdomains[@]}"; do
+            get_record_info "${domain}" "${sub}"
+        done
+    else
+        # Display information for the specified subdomain
+        get_record_info "${domain}" "${subdomain}"
+    fi
+}
+
+# Check for correct number of arguments
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
     echo "Usage: $0 <domain> [subdomain]"
     exit 1
 fi
 
-domain="$1"
-subdomain="$2"
-
-# Function to display information about a subdomain
-display_info() {
-    local record_type
-    local destination
-    record_type=$(dig +short "$subdomain.$domain" | awk '{print $3}')
-    destination=$(dig +short "$subdomain.$domain" | awk '{getline; print}')
-    echo "The subdomain $subdomain is a $record_type record and points to $destination"
-}
-
-# If subdomain is not provided, display information for default subdomains
-if [ -z "$subdomain" ]; then
-    subdomains=("www" "lb-01" "web-01" "web-02")
-else
-    subdomains=("$subdomain")
-fi
-
-# Iterate over the subdomains and display information
-display_subdomains_info() {
-    for sub in "${subdomains[@]}"; do
-        display_info "$sub"
-    done
-}
-
-# Call the function to display subdomain information
-display_subdomains_info
+# Call the main function with provided arguments
+main "$1" "$2"
