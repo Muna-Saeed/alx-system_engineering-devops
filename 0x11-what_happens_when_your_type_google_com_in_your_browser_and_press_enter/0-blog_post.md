@@ -42,5 +42,5 @@ This exploration highlights the intricate nature of the web stack, demonstrating
 
 *This blog post is part of the "Web Stack Unveiled" series, aiming to demystify the complexities of web technologies.*
 
-**Read the full blog post on [Medium](#) or [LinkedIn](#).**
+**Read the blog post on [Medium](https://medium.com/@munasaeed6367/what-happens-when-you-type-https-www-google-com-in-your-browser-and-press-enter-6a98ced43726) or [LinkedIn](https://www.linkedin.com/pulse/what-happens-when-you-type-httpswwwgooglecom-your-browser-muna-saeed-a8pye).**
 ---
