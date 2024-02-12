@@ -15,6 +15,3 @@ sudo ufw allow 443    # HTTPS
 
 # Enable ufw
 sudo ufw enable
-
-# Display ufw status for verification
-sudo ufw status verbose
