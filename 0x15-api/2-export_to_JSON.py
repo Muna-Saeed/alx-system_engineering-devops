@@ -5,9 +5,11 @@ Description: Python script that exports employee
 TODO list progress to a JSON file.
 """
 
-import sys
-import requests
+
 import json
+import requests
+import sys
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
