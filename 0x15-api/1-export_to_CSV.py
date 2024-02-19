@@ -3,7 +3,6 @@
 Module Name: 1-export_to_CSV.py
 Description: Python script that exports
 employee TODO list progress to a CSV file.
-Author: Your Name
 """
 
 import csv

@@ -3,7 +3,6 @@
 Module Name: 0-gather_data_from_an_API.py
 Description: Python script that, using a REST API, returns
 information about an employee's TODO list progress.
-Author: Your Name
 """
 
 
