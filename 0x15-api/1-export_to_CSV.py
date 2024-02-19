@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
 Module Name: 1-export_to_CSV.py
-Description: Python script that exports employee TODO list progress to a CSV file.
+Description: Python script that exports
+employee TODO list progress to a CSV file.
 Author: Your Name
 """
 
@@ -16,8 +17,10 @@ if __name__ == "__main__":
         exit(1)
 
     employee_id = argv[1]
-    user_url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
-    tasks_url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
+    user_url = "https://jsonplaceholder.typicode.com/users/{}"
+    .format(employee_id)
+    tasks_url = "https://jsonplaceholder.typicode.com/todos?userId={}"
+    .format(employee_id)
 
     response_user = requests.get(user_url)
     response_tasks = requests.get(tasks_url)
