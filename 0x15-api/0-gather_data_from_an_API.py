@@ -6,8 +6,8 @@ information about an employee's TODO list progress.
 """
 
 
-import sys
 import requests
+import sys
 
 
 if __name__ == "__main__":
