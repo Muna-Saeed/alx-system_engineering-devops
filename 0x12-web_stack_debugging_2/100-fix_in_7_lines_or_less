@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Using what you did for task #1, make your fix short and sweet.
+
 sed -i 's/user nginx;/user nginx;/' /etc/nginx/nginx.conf
 sed -i '/listen 80;/ a \    listen 8080;' /etc/nginx/sites-available/default
-nginx -s reload
+pkill apache2
+su nginx -s /bin/bash -c 'service nginx restart'
