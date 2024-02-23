@@ -3,7 +3,7 @@
 
 # Update the nginx configuration to run as the nginx user
 chmod 644 /etc/nginx/nginx.conf
-sed -i 's/user  nginx;/user  nginx;/' /etc/nginx/nginx.conf
+sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
 
 # Update the default site configuration to listen on port 8080
 sed -i '/listen 80;/ a \    listen 8080;' /etc/nginx/sites-available/default
