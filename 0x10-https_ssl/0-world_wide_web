@@ -17,7 +17,7 @@ function display_info {
     for sub in "${subdomains[@]}"; do
         record_type=$(dig "$sub.$domain" | awk '/ANSWER SECTION/ { getline; print $4}')
         destination=$(dig "$sub.$domain" | awk '/ANSWER SECTION/ { getline; print $5}')
-        echo "The subdomain $sub a $record_type record and points to $destination"
+        echo "The subdomain $sub is a $record_type record and points to $destination"
     done
 }
 
