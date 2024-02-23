@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 # Using what you did for task #1, make your fix short and sweet.
+
+# Update the nginx configuration to run as the nginx user
 chmod 644 /etc/nginx/nginx.conf
-sed -i 's/user nginx;/user nginx;/' /etc/nginx/nginx.conf
-sed -i '/listen 80;/ a \    listen 8080;' /etc/nginx/sites-available/default
+sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
+
+# Update the default site configuration to listen on port 8080
+sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
 pkill apache2
+
+# Restart Nginx to apply changes
 su nginx -s /bin/bash -c 'service nginx restart'
