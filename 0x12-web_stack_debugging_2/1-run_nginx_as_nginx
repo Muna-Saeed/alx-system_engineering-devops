@@ -7,12 +7,7 @@ sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
 
 # Update the default site configuration to listen on port 8080
 sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
+pkill apache2
 
 # Restart Nginx to apply changes
-service nginx restart
-
-# Check if Nginx is running as the nginx user
-ps auxff | grep ngin[x]
-
-# Check if Nginx is listening on port 8080
-nc -z 0 8080
+su nginx -s /bin/bash -c 'service nginx restart'
