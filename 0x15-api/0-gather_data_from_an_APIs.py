@@ -5,8 +5,10 @@ Description: Python script that, using a REST API, returns
 information about an employee's TODO list progress.
 """
 
+
 import requests
 import sys
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or not sys.argv[1].isdigit():
