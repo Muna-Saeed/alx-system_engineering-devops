@@ -1,24 +1,48 @@
 #!/usr/bin/env bash
 # This script displays information about subdomains.
 
-# Function to display information about a subdomain
-function display_info {
-    local domain="$1"
-    local subdomain="$2"
+# Function to display subdomain information
+display_info() {
+    local subdomain=$1
+    local domain=$2
+    local record_type=$3
+    local destination=$4
 
-# If subdomain is not provided, display information for default subdomains
-    if [ -z "$subdomain" ]; then
-        subdomains=("www" "lb-01" "web-01" "web-02")
-    else
-        subdomains=("$subdomain")
-    fi
-
-# Iterate over the subdomains and display information
-    for sub in "${subdomains[@]}"; do
-        record_type=$(dig "$sub.$domain" | awk '/ANSWER SECTION/ { getline; print $4}')
-        destination=$(dig "$sub.$domain" | awk '/ANSWER SECTION/ { getline; print $5}')
-        echo "The subdomain $sub a $record_type record and points to $destination"
-    done
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
 }
 
-display_info "$1" "$2"
+# Function to perform DNS lookup and extract information
+get_dns_info() {
+    local subdomain=$1
+    local domain=$2
+
+    # Perform DNS lookup and extract information
+    local result=$(dig $subdomain.$domain | grep -A1 'ANSWER SECTION:')
+    local record_type=$(echo "$result" | awk '/IN\s+[A-Z]+/ {print $4}')
+    local destination=$(echo "$result" | awk '/IN\s+[A-Z]+/ {print $5}')
+
+    # Display information using the display_info function
+    display_info "$subdomain" "$domain" "$record_type" "$destination"
+}
+
+# Main script
+
+# Check if domain parameter is provided
+if [ -z "$1" ]; then
+    echo "Error: Domain parameter is missing."
+    exit 1
+fi
+
+domain=$1
+
+# Check if subdomain parameter is provided
+if [ -n "$2" ]; then
+    subdomain=$2
+    get_dns_info "$subdomain" "$domain"
+else
+    # Display information for default subdomains
+    get_dns_info "www" "$domain"
+    get_dns_info "lb-01" "$domain"
+    get_dns_info "web-01" "$domain"
+    get_dns_info "web-02" "$domain"
+fi
