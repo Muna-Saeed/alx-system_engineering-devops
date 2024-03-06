@@ -4,11 +4,10 @@ package { 'apache2':
   ensure => installed,
 }
 
-# Configure Apache with your fix
-file { '/etc/apache2/sites-available/000-default.conf':
-  ensure  => file,
-  content => '# Your fixed Apache configuration here',
-  notify  => Service['apache2'],
+# To automate the fix
+exec { 'fix-apache':
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => '/usr/local/bin/:/bin/'
 }
 
 # Ensure Apache is running and restart if necessary
