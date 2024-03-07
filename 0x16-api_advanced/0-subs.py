@@ -3,7 +3,6 @@
 0-subs
 """
 import requests
-from sys import argv
 
 
 def number_of_subscribers(subreddit):
