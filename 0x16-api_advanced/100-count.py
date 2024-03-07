@@ -4,6 +4,7 @@
 """
 import requests
 
+
 def count_words(subreddit, word_list, after=None, count_dict=None):
     """
     Recursively queries the Reddit API, parses the titles of all hot articles,
@@ -21,14 +22,18 @@ def count_words(subreddit, word_list, after=None, count_dict=None):
     if count_dict is None:
         count_dict = {}
 
-    url = f'https://www.reddit.com/r/{subreddit}/hot.json'
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
-    params = {'limit': 100, 'after': after}
+    url = f"https://www.reddit.com/r/{subreddit}/hot.json"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
+    params = {"limit": 100, "after": after}
 
     try:
-        response = requests.get(url, headers=headers, params=params, allow_redirects=False)
+        response = requests.get(
+            url, headers=headers, params=params, allow_redirects=False
+        )
         if response.status_code == 200:
-            data = response.json()['data']['children']
+            data = response.json()["data"]["children"]
 
             if not data:
                 sorted_results = sorted(count_dict.items(), key=lambda x: (-x[1], x[0]))
@@ -37,12 +42,12 @@ def count_words(subreddit, word_list, after=None, count_dict=None):
                 return
 
             for post in data:
-                title = post['data']['title'].lower()
+                title = post["data"]["title"].lower()
                 for word in word_list:
-                    if f' {word.lower()} ' in f' {title} ':
+                    if f" {word.lower()} " in f" {title} ":
                         count_dict[word.lower()] = count_dict.get(word.lower(), 0) + 1
 
-            new_after = data[-1]['data']['name']
+            new_after = data[-1]["data"]["name"]
             return count_words(subreddit, word_list, new_after, count_dict)
         else:
             return
@@ -50,7 +55,8 @@ def count_words(subreddit, word_list, after=None, count_dict=None):
         print(f"Error: {e}")
         return
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     import sys
 
     if len(sys.argv) < 3:
