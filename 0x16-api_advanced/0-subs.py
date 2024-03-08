@@ -3,6 +3,7 @@
 0-subs
 """
 import requests
+from sys import argv
 
 
 def number_of_subscribers(subreddit):
@@ -15,20 +16,13 @@ def number_of_subscribers(subreddit):
     Returns:
         int: The number of subscribers, or 0 if the subreddit is invalid.
     """
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {
-        "User-Agent": "Mozilla/5.0 Chrome/58.0.3029.110 Safari/537."
-    }
+    user = {'User-Agent': 'Munawara'}
+    url = requests.get('https://www.reddit.com/r/{}/about.json'
+                       .format(subreddit), headers=user).json()
 
     try:
-        response = requests.get(url, headers=headers, allow_redirects=False)
-        if response.status_code == 200:
-            data = response.json()
-            return data["data"]["subscribers"]
-        else:
-            return 0
-    except Exception as e:
-        print(f"Error: {e}")
+        return url.get('data').get('subscribers')
+    except Exception:
         return 0
 
 
