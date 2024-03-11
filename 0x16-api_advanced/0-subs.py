@@ -1,49 +1,19 @@
 #!/usr/bin/python3
 """
-0-subs
+Script that queries subscribers on a given Reddit subreddit.
 """
+
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """
-    Returns the number of subscribers for a given subreddit.
-
-    Args:
-        subreddit (str): The name of the subreddit.
-
-    Returns:
-        int: The number of subscribers, or 0 if the subreddit is invalid.
-    """
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {
-        "User-Agent": "Mozilla/5.0 Chrome/58.0.3029.110 Safari/537."
-    }
-
-    try:
-        response = requests.get(url, headers=headers, allow_redirects=False)
-
-        # Check for a successful response (status code 200)
-        if response.status_code == 200:
-            data = response.json()
-            return data["data"]["subscribers"]
-        elif response.status_code == 404:
-            # Subreddit not found
-            print(f"Error: Subreddit '{subreddit}' not found.")
-            return 0
-        else:
-            # Handle other error cases
-            print(f"Error: Unexpected response from Reddit API. Status code: {response.status_code}")
-            return 0
-    except Exception as e:
-        print(f"Error: {e}")
-        return 0
-
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) < 2:
-        print("Please pass an argument for the subreddit to search.")
+    """Return the total number of subscribers on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {"User-Agent": "Mozilla/5.0"}
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 200:
+        data = response.json()
+        subscribers = data['data']['subscribers']
+        return subscribers
     else:
-        print("{:d}".format(number_of_subscribers(sys.argv[1])))
+        return 0
