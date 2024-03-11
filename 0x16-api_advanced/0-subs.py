@@ -1,41 +1,23 @@
 #!/usr/bin/python3
-"""
-0-subs
-"""
+'''
+    this module contains the function number_of_subscribers
+'''
 import requests
+from sys import argv
 
 
 def number_of_subscribers(subreddit):
-    """
-    Returns the number of subscribers for a given subreddit.
-
-    Args:
-        subreddit (str): The name of the subreddit.
-
-    Returns:
-        int: The number of subscribers, or 0 if the subreddit is invalid.
-    """
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    headers = {
-        "User-Agent": "Lizzie."
-    }
-
+    '''
+        returns the number of subscribers for a given subreddit
+    '''
+    user = {'User-Agent': 'Lizzie'}
+    url = requests.get('https://www.reddit.com/r/{}/about.json'
+                       .format(subreddit), headers=user).json()
     try:
-        response = requests.get(url, headers=headers, allow_redirects=False)
-        if response.status_code == 200:
-            data = response.json()
-            return data["data"]["subscribers"]
-        else:
-            return 0
-    except Exception as e:
-        print(f"Error: {e}")
+        return url.get('data').get('subscribers')
+    except Exception:
         return 0
 
 
 if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) < 2:
-        print("Please pass an argument for the subreddit to search.")
-    else:
-        print("{:d}".format(number_of_subscribers(sys.argv[1])))
+    number_of_subscribers(argv[1])
