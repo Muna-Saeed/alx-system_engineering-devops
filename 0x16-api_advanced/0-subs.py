@@ -1,23 +1,16 @@
 #!/usr/bin/python3
-'''
-    this module contains the function number_of_subscribers
-'''
+""" Module for task 0 """
 import requests
-from sys import argv
 
 
 def number_of_subscribers(subreddit):
-    '''
-        returns the number of subscribers for a given subreddit
-    '''
-    user = {'User-Agent': 'Lizzie'}
-    url = requests.get('https://www.reddit.com/r/{}/about.json'
-                       .format(subreddit), headers=user).json()
-    try:
-        return url.get('data').get('subscribers')
-    except Exception:
+    """ Queries the Reddit API of the users"""
+    req = requests.get(
+        "https://www.reddit.com/r/{}/about.json".format(subreddit),
+        headers={"User-Agent": "Custom"},
+    )
+
+    if req.status_code == 200:
+        return req.json().get("data").get("subscribers", 0)
+    else:
         return 0
-
-
-if __name__ == "__main__":
-    number_of_subscribers(argv[1])
