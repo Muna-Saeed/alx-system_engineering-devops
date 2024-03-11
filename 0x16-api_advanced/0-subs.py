@@ -1,20 +1,49 @@
 #!/usr/bin/python3
 """
-Queries the Reddit API and returns the number of total subscribers for a given
-subreddit.
+0-subs
 """
 import requests
 
 
 def number_of_subscribers(subreddit):
     """
-    Queries the Reddit API and returns the number of total subscribers for a
-    given subreddit.
+    Returns the number of subscribers for a given subreddit.
+
+    Args:
+        subreddit (str): The name of the subreddit.
+
+    Returns:
+        int: The number of subscribers, or 0 if the subreddit is invalid.
     """
-    url = 'http://www.reddit.com/r/{}/about.json'.format(subreddit)
-    headers = {'User-Agent': 'Python/1.0(Holberton School 0x16 task 0)'}
-    response = requests.get(url, headers=headers)
-    if (not response.ok):
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    headers = {
+        "User-Agent": "Mozilla/5.0 Chrome/58.0.3029.110 Safari/537."
+    }
+
+    try:
+        response = requests.get(url, headers=headers, allow_redirects=False)
+
+        # Check for a successful response (status code 200)
+        if response.status_code == 200:
+            data = response.json()
+            return data["data"]["subscribers"]
+        elif response.status_code == 404:
+            # Subreddit not found
+            print(f"Error: Subreddit '{subreddit}' not found.")
+            return 0
+        else:
+            # Handle other error cases
+            print(f"Error: Unexpected response from Reddit API. Status code: {response.status_code}")
+            return 0
+    except Exception as e:
+        print(f"Error: {e}")
         return 0
-    subscriber_count = response.json().get('data').get('subscribers')
-    return subscriber_count
+
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
+    else:
+        print("{:d}".format(number_of_subscribers(sys.argv[1])))
